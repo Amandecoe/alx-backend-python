@@ -1,1 +1,50 @@
-xyz  
+import mysql.connector
+
+def connect_db(): #function to connect to mysql server/our mysql server is named connection here
+  try:
+    connection = mysql.connector.connect(  #connect() is a function which creates connection based on properties provided and it belongs to mysql.connector
+      host = "localhost",
+      user = "root",                 #sets the properties for the connection
+      password = "root"
+    )
+    return connection
+  except Exception as e:
+    print(f"Error detected connecting to mysql: {e}")  
+    return None
+  
+def create_database(connection):   #creates a database from the mysql connection we set up in connect_db
+ try:
+  mycursor = connection.cursor()  
+  mycursor.execute("Create database IF NOT EXISTS ALX_prodev")#cursor allows python to connect to the mysql server and execute create, insert, select etc
+  print("Database 'ALX_prodev' created or already exists")
+ except Exception as b:
+  print(f"Error creating database: {b}")
+
+def connect_to_prodev():
+  try:
+    connection = mysql.connector.connect(  #connect() is a function which creates connection based on properties provided and it belongs to mysql.connector
+      host = "localhost",
+      user = "root",                
+      password = "root",
+      database = "ALX_prodev"
+    )
+    return connection
+  except Exception as c:
+    print (f"Error connecting to ALX_prodev: {c}")
+    return None 
+  
+def create_table(connection):   #A function to create a table in the mysql connection we are connected to 
+  try:
+    mycursor= connection.cursor()
+    mycursor.execute("""
+            CREATE TABLE IF NOT EXISTS user_data (
+                user_id VARCHAR(36) PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                age DECIMAL(10, 2) NOT NULL,
+                INDEX (user_id)
+            )
+        """)
+    print ("Table 'user_data' created or already exists.")
+  except Exception as d:
+    print (f"Error creating the table: {d}")
