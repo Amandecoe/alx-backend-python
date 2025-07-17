@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector import Error
 
 def connect_db(): #function to connect to mysql server/our mysql server is named connection here
   try:
@@ -19,6 +20,8 @@ def create_database(connection):   #creates a database from the mysql connection
   print("Database 'ALX_prodev' created or already exists")
  except Exception as b:
   print(f"Error creating database: {b}")
+ finally:
+   mycursor.close()
 
 def connect_to_prodev():
   try:
@@ -48,3 +51,5 @@ def create_table(connection):   #A function to create a table in the mysql conne
     print ("Table 'user_data' created or already exists.")
   except Exception as d:
     print (f"Error creating the table: {d}")
+  finally:
+        mycursor.close()
