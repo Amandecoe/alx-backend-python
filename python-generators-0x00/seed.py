@@ -6,7 +6,7 @@ def connect_db(): #function to connect to mysql server/our mysql server is named
     connection = mysql.connector.connect(  #connect() is a function which creates connection based on properties provided and it belongs to mysql.connector
       host = "localhost",
       user = "root",                 #sets the properties for the connection
-      password = "root"
+      password = ""
     )
     return connection
   except Exception as e:
@@ -28,7 +28,7 @@ def connect_to_prodev():
     connection = mysql.connector.connect(  #connect() is a function which creates connection based on properties provided and it belongs to mysql.connector
       host = "localhost",
       user = "root",                
-      password = "root",
+      password = "",
       database = "ALX_prodev"
     )
     return connection
@@ -53,3 +53,18 @@ def create_table(connection):   #A function to create a table in the mysql conne
     print (f"Error creating the table: {d}")
   finally:
         mycursor.close()
+
+if __name__ == "__main__":
+    # First connect to MySQL server
+    connection = connect_db()
+    if connection:
+        # Create the database
+        create_database(connection)
+        connection.close()  # Close the initial connection
+        
+        # Now connect to the specific database
+        prodev_connection = connect_to_prodev()
+        if prodev_connection:
+            # Create the table
+            create_table(prodev_connection)
+            prodev_connection.close()        
