@@ -41,7 +41,7 @@ def create_table(connection):   #A function to create a table in the mysql conne
     mycursor= connection.cursor()
     mycursor.execute("""
             CREATE TABLE IF NOT EXISTS user_data (
-                user_id VARCHAR(36) PRIMARY KEY,
+                user_id VARCHAR(36) PRIMARY KEY AUTO INCREMENT,
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 age DECIMAL(10, 2) NOT NULL,
