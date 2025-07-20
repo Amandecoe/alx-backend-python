@@ -1,6 +1,8 @@
 import sqlite3
 import functools
 import time
+from datetime import datetime
+
 
 def log_query(func):
     """Simple decorator to log database queries"""
