@@ -20,3 +20,7 @@ def get_user_by_id(conn, user_id):
 # Usage
 user = get_user_by_id(1)  # Now works with simple user_id
 print(user)
+
+
+
+##code doesn't work!!!!!

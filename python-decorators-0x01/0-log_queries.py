@@ -37,3 +37,5 @@ def fetch_all_users(query, params= None):
 users = fetch_all_users(query="SELECT * FROM users")
 print (users)
 
+
+##code doesn't work!!!!!
