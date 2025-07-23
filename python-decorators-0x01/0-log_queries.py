@@ -1,41 +1,44 @@
 import sqlite3
-import functools
-import time
-from datetime import datetime
 
 
-def log_query(func):
-    """Simple decorator to log database queries"""
-    def wrapper(query):
-        print(f"🚀 Running query: {query}")  # Log the query
-        
-        start_time = time.time()   
-        try:          # Start timer
-         result = func(query)                 # Run the original function
-         end_time = time.time()              # Stop timer
-        
-         print(f"✅ Done in {end_time-start_time:.2f}s")  # Log time taken
-         return result
-        except sqlite3.Error as e:
-            print(f"❌ Query failed: {e}")
-            raise
-        finally:
-            print("--- Query completed ---\n")
-    return wrapper
+
+class Database:
+ def __init__(conn, users):
+  conn = sqlite3.connect("users.db") #connects to a database, creates one if it doesnt exist
+  conn.cursor = conn.cursor() #creates a cursor object which is used to access the data in the database
 
 
-@log_query
-def fetch_all_users(query, params= None):
-    conn = sqlite3.connect('users.db')
+ def create_table(conn):
+   try: 
+    conn.cursor.execute('''
+      CREATE TABLE IF NOT EXISTS users( 
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          email TEXT UNIQUE NOT NULL,
+          age INTEGER) 
+     ''')
+    conn.commit() #save the changes
+    print("Table created successfuly")
+  
+   except sqlite3.Error as e:
+    print ("Table not created: ")
+  
+ def table_population(conn, name, email, age):
+   try:
     cursor = conn.cursor()
-    cursor.execute(query)
-    results = cursor.fetchall()
-    conn.close()
-    return results
+    cursor.execute("INSERT INTO users (name, email, age) VALUES (?,?,?)",(name, email, age))
+    conn.commit()
+    print("data added succesfully")
+   except sqlite3.Error as b:
+    print ("Can not add to table")
 
-#### fetch users while logging the query
-users = fetch_all_users(query="SELECT * FROM users")
-print (users)
+def main():
+ db = Database("users")
+ db.create_table()
+ db.table_population("Amanuel","runaway21@gmail.com",22)
+
+main()
+
+ 
 
 
-##code doesn't work!!!!!
