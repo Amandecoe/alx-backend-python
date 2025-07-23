@@ -21,10 +21,11 @@ def with_db_connection(func):
                 print("Database closed successfully")
     return wrapper
 
-def retry_on_failure(func):
+def retry_on_failure(retires , delay):
+  def decorator(func):
     @functools.wraps(func)
-    def wrapper ( *args, **kwargs):
-     while true:
+    def wrapper (conn, *args, **kwargs):
+     while True:
        try:
 
          result = func(conn, *args, **kwargs)
