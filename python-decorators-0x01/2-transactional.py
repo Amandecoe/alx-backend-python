@@ -1,3 +1,4 @@
+from ast import arg
 import sqlite3 
 import functools
 
@@ -22,11 +23,17 @@ def with_db_connection(func):
 
 
 def transactional(func):
-    def wrapper():
-
-     return wrapper    
- 
- 
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+     try:
+        conn = sqlite3.connect('usersin.db')
+        result = func(conn,*args, **kwargs)
+        conn.commit()
+        return result  
+     except sqlite3.Error as e:
+       conn.rollback()
+       raise 
+    return wrapper
 
 @with_db_connection 
 @transactional 
@@ -38,7 +45,8 @@ def update_user_email(conn, user_id, new_email):
 
 
 def main():
- update_user_email(user_id=1, new_email='Crawford_Cartwright@hotmail.com')
+ conn = sqlite3.connect('usersin.db')
+ update_user_email( user_id=1, new_email='Crawford_Cartwright@hotmail.com')
 
 if __name__=="__main__":
-    main() 
+ main() 
