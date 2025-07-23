@@ -14,7 +14,7 @@ def log_queries(func):
       return result
   return wrapper  
 
-def populate_table( conn,name, email, age):
+def populate_table(conn,name, email, age):
    try:      
      cursor = conn.cursor()   
      cursor.execute(
