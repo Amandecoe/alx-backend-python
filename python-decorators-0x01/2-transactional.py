@@ -10,7 +10,6 @@ def with_db_connection(func):
             conn = sqlite3.connect('usersin.db')
             print("Database connection established")
             result = func(conn, *args, **kwargs)
-            conn.commit()
             return result
         except sqlite3.Error as e:
             print("Cannot establish database connection:", e)
