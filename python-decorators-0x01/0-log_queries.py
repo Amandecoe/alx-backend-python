@@ -8,26 +8,22 @@ def log_queries(func):
       duration = time.time() - start
         
         # Get the SQL query (assuming it's the first argument)
-      sql = args[0] if args else "No query captured"
+      sql = args[0] if args else "No query captured"  #in our case it takes SELECT * FROM user because that is our query
       print(f"Query took {duration:.4f} seconds: {sql[:50]}...")  # Show first 50 chars
         
       return result
   return wrapper  
 
-def populate_table(conn, name, email, age):
-   conn = sqlite3.connect('usersin.db')
-   cursor = conn.cursor()
-   try:
-      cursor.execute(
-         'INSERT INTO TABLE user(name, email, age)'
-         'VALUES(?,?,?)', (name, email, age)
+def populate_table( conn,name, email, age):
+   try:      
+     cursor = conn.cursor()   
+     cursor.execute(
+         "INSERT INTO user(name, email, age) VALUES(?,?,?)", (name, email, age)
       )
-      conn.commit()
-      print ("data added successfully")
+     conn.commit()
+     print ("data added successfully")
    except sqlite3.Error as k:
-      print ("Can not enter data into table")
-   finally:
-      conn.close()   
+      print ("Can not enter data into table")  
 
 def create_table():
    conn = sqlite3.connect('usersin.db')
@@ -58,8 +54,7 @@ def fetch_user_data(query):
 
 def main():
    conn = sqlite3.connect('usersin.db')
-   create_table()
-   populate_table(conn,"Aman", "aman123@gmail.com",20)
+   fetch_user_data( "SELECT * FROM user")
 if __name__ == "__main__":
     main()   
 
