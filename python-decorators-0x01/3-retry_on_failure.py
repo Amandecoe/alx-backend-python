@@ -21,7 +21,7 @@ def with_db_connection(func):
                 print("Database closed successfully")
     return wrapper
 
-def retry_on_failure(retires=3 , delay):
+def retry_on_failure(retires=3 , delay=1):
   def decorator(func):
     @functools.wraps(func)
     def wrapper (conn, *args, **kwargs):
@@ -36,7 +36,7 @@ def retry_on_failure(retires=3 , delay):
 
 
 @with_db_connection
-@retry_on_failure(retries=3, delay=1)
+
 
 def fetch_users_with_retry(conn):
  cursor = conn.cursor()
