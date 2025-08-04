@@ -10,7 +10,7 @@ class ExecuteQuery:
       return self.conn
     except sqlite3.Error as h:
       print("Error Opening Database")
-  def __exit__(self, exc_type, exc_val):
+  def __exit__(self, exc_type, exc_val,  exc_tb):
     if self.conn:
       try: 
         if exc_type:
@@ -26,4 +26,12 @@ class ExecuteQuery:
 
 if __name__ == '__main__':
   try:
-    
+    with ExecuteQuery() as conn:
+      cursor = conn.cursor()
+      cursor.execute('SELECT * FROM users WHERE age > 25')
+      result=cursor.fetchall()
+      print ("Query executed succesfully")
+  except sqlite3.Error as e:
+        print(f"Database error: {e}")    
+  except sqlite3.Error as e:
+    print ("Query can not be executed")    

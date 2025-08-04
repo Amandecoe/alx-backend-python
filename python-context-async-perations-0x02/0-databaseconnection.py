@@ -36,7 +36,6 @@ if __name__ == "__main__":
             cursor.execute('SELECT * FROM users')
             result = cursor.fetchall()
             print("Query executed successfully")
-            # Process results here
     except sqlite3.Error as e:
         print(f"Database error: {e}")
     except Exception as e:
