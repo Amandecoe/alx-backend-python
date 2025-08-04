@@ -1,7 +1,7 @@
 import sqlite3
 
 class DatabaseConnection:
-    def __init__(self, db_name='usersin.db'):
+    def __init__(self, db_name='usersin.db'): #constructor which initializes an object
         self.db_name = db_name
         self.conn = None
     
@@ -11,8 +11,7 @@ class DatabaseConnection:
             print("Database opened successfully")
             return self.conn
         except sqlite3.Error as e:
-            print(f"Cannot open database: {e}")
-            raise  # Re-raise to prevent continuation
+            print(f"Cannot open database:")
     
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.conn:
@@ -29,7 +28,7 @@ class DatabaseConnection:
                 self.conn.close()
                 print("Database closed successfully")
 
-# Usage
+
 if __name__ == "__main__":
     try:
         with DatabaseConnection() as conn:
