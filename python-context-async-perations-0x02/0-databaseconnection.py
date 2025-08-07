@@ -20,7 +20,7 @@ class DatabaseConnection:
                     print(f"Error occurred: {exc_val}")
                     self.conn.rollback() #rollback the connection again if the error occurs
                 else:
-                    self.conn.commit() #if there is no error just save it 
+                    self.conn.commit() #if there is no error just save it and continue 
             except sqlite3.Error as e:
                 print(f"Error during commit/rollback: {e}")
                 raise
