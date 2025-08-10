@@ -20,5 +20,7 @@ def async_fetch_older_users(conn):
 
 
 if __name__ == '__main__':
- asyncio.gather(_fetch_older_users(), _fetch_users())
+await asyncio.gather(_fetch_older_users(), _fetch_users())
  asyncio.run(fetch_concurrently())
+ async_fetch_older_users()
+ async_fetch_users()
