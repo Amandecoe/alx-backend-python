@@ -2,7 +2,7 @@ import asyncio
 import aiosqlite
 import sqlite3
 
-async def _fetch_users(conn): 
+def async_fetch_users(conn): 
  try:
   conn = sqlite3.connect('usersin.db')
   cursor = cursor.conn()
@@ -10,7 +10,7 @@ async def _fetch_users(conn):
  except sqlite3.Error as d:
   print("Can not connect to database")
 
-async def _fetch_older_users(conn):
+def async_fetch_older_users(conn):
  try:
   conn = sqlite3.connect('usersin.db')
   cursor = cursor.conn()
