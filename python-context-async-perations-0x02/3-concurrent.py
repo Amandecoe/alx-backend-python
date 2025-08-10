@@ -18,3 +18,7 @@ async def _fetch_older_users(conn):
  except sqlite3.Error as x:
   print ("Can not connect to database")
 
+
+if __name__ == '__main__':
+ asyncio.gather(_fetch_older_users(), _fetch_users())
+ asyncio.run(fetch_concurrently())
