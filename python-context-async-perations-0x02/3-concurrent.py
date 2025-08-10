@@ -2,21 +2,23 @@ import asyncio
 import aiosqlite
 import sqlite3
 
-def async_fetch_users(conn): 
+def async_fetch_users(): 
  try:
   conn = sqlite3.connect('usersin.db')
   cursor = cursor.conn()
   await cursor.execute('SELECT * USERS from users')
  except sqlite3.Error as d:
   print("Can not connect to database")
+  return conn
 
-def async_fetch_older_users(conn):
+def async_fetch_older_users():
  try:
   conn = sqlite3.connect('usersin.db')
   cursor = cursor.conn()
   await cursor.execute ('SELECT USERS WHERE Age > 40')
  except sqlite3.Error as x:
   print ("Can not connect to database")
+  return conn
 
 
 if __name__ == '__main__':
