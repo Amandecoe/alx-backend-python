@@ -17,7 +17,7 @@ class TestAccessNestedMap(unittest.TestCase):
   ({}, ("a",), KeyError),
   ({"a": 1}, ("a", "b"), KeyError)
   ])   
-  def TestAccessNestedMap(self, nested_map, path, expected_exception):
+  def test_access_nested_map_exception(self, nested_map, path, expected_exception):
     self.assertRaises(access_nested_map(nested_map, path, expected_exception))
 
 
