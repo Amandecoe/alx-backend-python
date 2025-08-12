@@ -24,22 +24,20 @@ class TestAccessNestedMap(unittest.TestCase):
         access_nested_map(nested_map, path)
 
 class TestGetJson(unittest.TestCase):
-   @patch('utils.requests.get') #we replaced the original requests.get with a fake requests.get
-   def test_get_json(self,mock_get): #we passed the fake requests.get in mock_get
-      test_cases=[
-         ("http://example.com", {"payload": True}),  #the payload:true is our mock response that appears when the link/url http://example.com is called
-         ("http://holberton.io",{"payload": False})
-         ]
-      for test_url, test_payload in test_cases:
-         mock_response = Mock() #created a mock response object called mock_response from the mock class
-         mock_response.json.return_value = test_payload #this stores the test_payload values in mock_response in the form of dictionary(json)
-         mock_get.return_value = mock_response #the new requests.get value returns the values in the mock_response, which are the json values we assigned above (payload:true)
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])
+    @patch('utils.requests.get')
+    def test_get_json(self, test_url, test_payload, mock_get):
+        mock_response = Mock()
+        mock_response.json.return_value = test_payload
+        mock_get.return_value = mock_response
 
-         result = get_json(test_url)
-         mock_get.assert_called_once_with(test_url) #counts if the mock_get is called exactly once(the mock_get records everything )
-         
-         mock_get.reset_mock()
-      
+        result = get_json(test_url)
+
+        self.assertEqual(result, test_payload)
+        mock_get.assert_called_once_with(test_url)
 
 
 if __name__ == "__main__":
