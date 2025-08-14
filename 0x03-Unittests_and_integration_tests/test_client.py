@@ -7,10 +7,10 @@ The tests cover various methods of the GithubOrgClient class including:
 - public_repos method
 """
 import unittest
-from parameterized import parameterized
-from unittest.mock import PropertyMock, patch
+from parameterized import parameterized, parameterized_class
+from unittest.mock import PropertyMock, patch, Mock
 from client import GithubOrgClient
-
+from fixture import org_payload, repos_payload, expected_repos, apache2_repos,url
 
 class TestGithubOrgClient(unittest.TestCase):
     """This tests that GithubOrgClient.org returns the correct value."""
@@ -94,6 +94,25 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_has_license(self, repo, license_key, expected):
         client = GithubOrgClient("testorgs")
         self.assertEqual(client.has_license(repo, license_key), expected)
+
+
+@parameterized_class([
+    {
+        "org_payload": org_payload,  
+        "repos_payload": repos_payload,  
+        "expected_repos": expected_repos,  
+        "apache2_repos": apache2_repos  
+    }
+])
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    def setUpClass(self,get_patcher):
+        mock_value = patch ('request.get')
+        if "orgs" in url:
+            return Mock
+        if "repos" in url:
+            return Mock
+          
+
 
 
 if __name__ == '__main__':
