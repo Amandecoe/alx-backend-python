@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""This module contains unit tests for the GithubOrgClient class in client.py.
+
+The tests cover various methods of the GithubOrgClient class including:
+- org property
+- _public_repos_url property
+- public_repos method
+"""
 import unittest
 from parameterized import parameterized
 from unittest.mock import PropertyMock, patch
@@ -13,9 +20,15 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')  # get_json return data from a url but
     # now it is patched to return a mock value
-    def test_org(self, org_name, mock_get_json):  # org_name
-        # stored the parameterized.expand values
-        # and mock_get_json saves the mock value of get_json
+    def test_org(self, org_name, mock_get_json):
+        """Test that GithubOrgClient.org returns the correct organization data.
+        Args:
+            org_name: The name of the organization to test (parameterized)
+            mock_get_json: Mock object for the get_json function
+        Verifies:
+            - The returned organization data matches the expected payload
+            - get_json is called exactly once with the correct URL
+        """
         expected_payload = {'login': org_name}  # stores the org_name in
         # dictionary format
         mock_get_json.return_value = expected_payload
