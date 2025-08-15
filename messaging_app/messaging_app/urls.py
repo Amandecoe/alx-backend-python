@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include ("chats.urls")),
+    path('api/', include ("chats.urls")),
 ]
 #whenever we receive any url we are going to take it and pass it chats.urls files and 
 #parse it from there
