@@ -1,4 +1,4 @@
-from rest_framework import routers.DefaultRouter
+from rest_framework import routers.DefaultRouter()
 from django.urls import path, include
 from .views import ConversationViewSet, MessageViewSet
 
