@@ -21,23 +21,6 @@ created_at = models.DateTimeField(max_length=30, auto_now_add=True)
 #the object is created and never change it afterward
 
 
-class Property(models.model):
-    property_id = models.UUIDField(primary_key=True, default = uuid.uuid4)
-    host = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length = 200, null=False, blank =False)
-    
-
-
-class Booking(models.model):
-    class status(models.TextChoices):
-        PENDING = 'pending', 'Pending'
-        CONFIRMED = 'confirmed', 'Confirmed'
-        CANCELED = 'canceled' , 'Canceled'
-    booking_id = models.UUIDField(primary_key=True, default = uuid.uuid4, editable=False)
-    property_id = models.Foreignkey(Property, on_delete = models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
 class Message(models.model):
     message_id = models.UUIDField(max_length=30, primary_key=True, default=uuid.uuid4, db_index=True)
     sender_id = models.ForeignKey(User, foreign_key = True)
