@@ -23,8 +23,12 @@ created_at = models.DateTimeField(max_length=30, auto_now_add=True)
 class Message(models.model):
     message_id = models.UUIDField(max_length=30, primary_key=True, default=uuid.uuid4, db_index=True)
     sender_id = models.ForeignKey(User, foreign_key = True)
+    #this references the primary key of User which is user_id
     message_body = models.CharField(max_length=30, null = False)
-    
+    sent_at = models.DateTimeField(max_length=30, auto_now_add = True)
+
+
+
 
   
     
