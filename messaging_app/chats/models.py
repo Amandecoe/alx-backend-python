@@ -10,7 +10,7 @@ class User(AbstractUser):
   last_name = models.CharField(max_length=30)
   email = models.EmailField(max_length=50, unique=True, null=False, db_index = True)
   password_hash = models.CharField(max_length = 30)
-  phone_number = models.CharField(max_length=30)
+  phone_number = models.PositiveIntegerField(max_length=30)
   class Role(models.TextChoices):  # This is not a separate table — just an enum definition
         GUEST = 'guest', 'Guest'
         HOST = 'host', 'Host'
