@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from rest_framework.response import Response
 from rest_framework import viewsets
-from rest_framework import filters
 from .models import Conversation, Message
 from .serializers import ConversationSerializer, MessageSerializer
+from rest_framework.decorators import action
 # Create your views here.
 class ConversationViewSet(viewsets.ModelViewSet):
-  queryset = Conversation.object.all()
+  queryset = Conversation.objects.all()
   #where query is run from 
   serializer_class = ConversationSerializer
   #serializer we use when returning this data
@@ -19,5 +19,5 @@ class ConversationViewSet(viewsets.ModelViewSet):
     )
     return Response(MessageSerializer(message).data, status=201) #returns the message as JSON with HTTP status 201
 class MessageViewSet(viewsets.ModelViewSet):
-  queryset = Message.object.all()
+  queryset = Message.objects.all()
   serializer_class = MessageSerializer
