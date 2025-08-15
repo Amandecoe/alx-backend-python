@@ -5,6 +5,13 @@ from django.db import models
 class User(AbstractUser): 
   profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
   online_status = models.BooleanField(default=False)
+  user_id = models.CharField(max_length=30, primary_key=True )
+  first_name = models.CharField(max_length=30)
+  last_name = models.CharField(max_length=30)
+  email = models.CharField(max_length=50, unique=True, null=False)
+  password_hash = models.CharField(max_length = 30)
+  phone_number = models.CharField(max_length=30)
+  role = models.CharField()
   class meta: 
     verbose_name = 'User'
     #shows as 'User' instead of the one you gave the class you defined
