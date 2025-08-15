@@ -8,26 +8,17 @@ class User(AbstractUser):
   user_id = models.CharField(max_length=30, primary_key=True )
   first_name = models.CharField(max_length=30)
   last_name = models.CharField(max_length=30)
-  email = models.CharField(max_length=50, unique=True, null=False)
+  email = models.EmailField(max_length=50, unique=True, null=False)
   password_hash = models.CharField(max_length = 30)
   phone_number = models.CharField(max_length=30)
-  role = models.CharField()
-  class meta: 
-    verbose_name = 'User'
-    #shows as 'User' instead of the one you gave the class you defined
-    verbose_name_plural = 'Users'
-    #plural name of the user
-    db_table = 'User'
-    #stores in a table named 'Users'
-    ordering = ['date_joined']
-    #orders data by registration date
-    def __str__(self):
-      #controls how your model instances appear
-      #as strings throughout django
-      #controls amin interface display
-      return self.username
-    
-class conversation():
-      participants = models.ManyToManyField('User', related_name= 'conversations')
+  class Role(models.TextChoices):  # This is not a separate table — just an enum definition
+        GUEST = 'guest', 'Guest'
+        HOST = 'host', 'Host'
+        ADMIN = 'admin', 'Admin'
+  role = models.CharField(max_length=30, choices = Role.choices, default = Role.GUEST)
+created_at = models.DateTimeField(max_length=30, auto_now_add=True)
+#django will automatically set this field to the current timestamp when 
+#the object is created and never change it afterward
 
+  
     
