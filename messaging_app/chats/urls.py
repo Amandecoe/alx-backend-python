@@ -1,9 +1,10 @@
 from rest_framework.routers import DefaultRouter
+from django.urls import path, include
 from .views import ConversationViewSet, MessageViewSet
 
-router = DefaultRouter()
+routers = DefaultRouter()
 #Automatically creates a RESTful URLs for the viewset
-router.register(r'conversations', ConversationViewSet)
+routers.register(r'conversations', ConversationViewSet)
 #Registers the conversationview at /conversations/
-urlpatterns = router.urls
+urlpatterns = routers.urls
 #connects all these URLS to Django's routing system
