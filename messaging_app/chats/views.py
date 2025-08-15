@@ -8,4 +8,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
   #where query is run from 
   serializer_class = ConversationSerializer
   #serializer we use when returning this data
-  
+
+class MessageViewSet(viewsets.ModelViewSet):
+  queryset = Message.object.all()
+  serializer_class = MessageSerializers
