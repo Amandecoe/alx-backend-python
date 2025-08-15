@@ -1,11 +1,11 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+import uuid
 # Create your models here.
 class User(AbstractUser): 
   profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
   online_status = models.BooleanField(default=False)
-  user_id = models.CharField(max_length=30, primary_key=True )
+  user_id = models.UUIDField(max_length=30, primary_key=True, default=uuid.uuid4, db_index=True)
   first_name = models.CharField(max_length=30)
   last_name = models.CharField(max_length=30)
   email = models.EmailField(max_length=50, unique=True, null=False)
@@ -19,6 +19,12 @@ class User(AbstractUser):
 created_at = models.DateTimeField(max_length=30, auto_now_add=True)
 #django will automatically set this field to the current timestamp when 
 #the object is created and never change it afterward
+
+class Message(models.model):
+    message_id = models.UUIDField(max_length=30, primary_key=True, default=uuid.uuid4, db_index=True)
+    sender_id = models.ForeignKey(User, foreign_key = True)
+    message_body = models.CharField(max_length=30, null = False)
+    
 
   
     
