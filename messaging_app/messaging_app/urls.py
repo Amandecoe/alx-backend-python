@@ -21,4 +21,4 @@ urlpatterns = [
 
 ]
 #whenever we receive any url we are going to take it and pass it chats.urls files and 
-#parse it from there
+#parse it from there,yeah
