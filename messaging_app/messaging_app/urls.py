@@ -15,9 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls')) .
 """
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('api-auth/', include ("chats.urls")),
+     # JWT auth endpoints
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),   # login
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # refresh
 
 ]
 #whenever we receive any url we are going to take it and pass it chats.urls files and 
