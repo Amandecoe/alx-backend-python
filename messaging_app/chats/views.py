@@ -19,6 +19,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
     message = Message.objects.create( #saves a new message linked to the conversation and sender
       conversation = conversation,
+      sender=request.user,
       message_body = message_body
     )
     return Response(MessageSerializer(message).data, status=201) #returns the message as JSON with HTTP status 201
