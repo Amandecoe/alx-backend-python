@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsParticipantOfConversation
 from rest_framework import status
+from .pagination import MessageFilter
 # Create your views here.
 class ConversationViewSet(viewsets.ModelViewSet):
   queryset = Conversation.objects.all()
@@ -28,10 +29,11 @@ class MessageViewSet(viewsets.ModelViewSet):
   queryset = Message.objects.all()
   serializer_class = MessageSerializer
   permission_class = [IsAuthenticated]
+  pagination_class = MessageFilter
 
   def get_queryset(self):   
    conversation_id = self.kwargs.get("conversation_id") #You store the URL patterns captured by your routers here using kwargs.get
-   return Message.objects.filter(conversation_id=conversation_id, conversation_participants = self.request.user)
+   return Message.objects.filter(conversation_id=conversation_id, conversation_participants = self.request.user).order_by('created_at')
   #this checks if the conversation_id is the same as the one captured, and also if the user is participant of that conversation
 
   #checks if the user is part of the conversation
@@ -43,3 +45,5 @@ class MessageViewSet(viewsets.ModelViewSet):
         {"detail: You are not a participant of this conversation"},
         status= status.HTTP_403_FORBIDDEN
       )
+    
+
