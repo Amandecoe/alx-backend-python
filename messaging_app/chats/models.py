@@ -6,7 +6,7 @@ import uuid
 class User(AbstractUser): 
   profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
   online_status = models.BooleanField(default=False)
-  user_id = models.UUIDField(max_length=30, primary_key=True, default=uuid.uuid4, db_index=True)
+  user_id = models.AutoField( primary_key=True)
   first_name = models.CharField(max_length=30)
   last_name = models.CharField(max_length=30)
   email = models.EmailField(max_length=50, unique=True, null=False, db_index = True)
@@ -17,6 +17,8 @@ class User(AbstractUser):
         ADMIN = 'admin', 'Admin'
   role = models.CharField(max_length=30, choices = Role.choices, default = Role.GUEST)
   created_at = models.DateTimeField(max_length=30, auto_now_add=True)
+  def __str__(self):
+        return self.username
 #django will automatically set this field to the current timestamp when 
 #the object is created and never change it afterward
 
@@ -27,11 +29,13 @@ class Message(models.Model):
     #this references the primary key of User which is user_id
     message_body = models.CharField(max_length=500, null = False)
     sent_at = models.DateTimeField(max_length=30, auto_now_add = True)
+    conversation = models.ForeignKey('Conversation', on_delete=models.CASCADE,related_name='messages')
+   
 
 
 class Conversation(models.Model):
     conversation_id = models.UUIDField(primary_key=True, db_index = True, default = uuid.uuid4)
-    participants_id = models.ManyToManyField(User)
+    participants = models.ManyToManyField(User)
     created_at = models.DateTimeField(auto_now_add=True)
     #auto_now_add = sets the timestamp once on creation
 

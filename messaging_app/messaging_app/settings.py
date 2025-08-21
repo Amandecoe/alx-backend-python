@@ -97,6 +97,8 @@ DATABASES = {
 }
 
 SIMPLE_JWT = {
+    'USER_ID_FIELD': 'username',
+    'USER_ID_CLAIM': 'username',
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),   # adjust as needed
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
