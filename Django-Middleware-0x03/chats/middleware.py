@@ -16,7 +16,7 @@ class RequestLoggingMiddleware:
       return response  
 
 
-class  RestrictAccessByTimeMiddleware:
+class RestrictAccessByTimeMiddleware:
    def __init__(self, get_response):
       self.get_response = get_response
    def __call__(self,request):
