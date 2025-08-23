@@ -6,7 +6,7 @@ import time
 from collections import deque
 from django.http import JsonResponse
 class RequestLoggingMiddleware:
-  def __init__(self, get_response): #is the function that accepts the response everytime 
+  def __init__(self, get_response): #is the function that accepts the response everytime a request is given
       self.get_response = get_response
   
   def __call__(self, request):
@@ -42,10 +42,21 @@ class OffensiveLanguageMiddleware:
 
      request_times = self.request_log[client_ip] #stores the amount of times a user have requested using the client's ip from the request_log 
 
+     while request_times and now - request_times[0] > self.time_window:
+            request_times.popleft()
+      # deletes the older timestamp to add a new one into the deque
      if len(request_times) > self.max_requests:  #checks the number of requests and if it passes the max requests allowed it puts out an error message
         return JsonResponse(
            {"Error":"Limit Reached Try Again Later"},
            status = 429
         )
+     #logs the request if it passes the above if statement
+     self.log_request(request)
+
+        # adds the current request's timestamp since now is the time right when the request is doneS
+     request_times.append(now)
+
+     return self.get_response(request)
+
      
      
