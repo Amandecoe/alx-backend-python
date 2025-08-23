@@ -1,6 +1,7 @@
 from django.conf import Settings
 from django.core.exceptions import PermissionDenied
-from datetime import datetime
+import time
+from datetime import datetime, time as dt_time
 import logging
 import time
 from collections import deque
@@ -23,7 +24,7 @@ class RestrictAccessByTimeMiddleware:
       self.get_response = get_response
    def __call__(self,request):
       current_time = datetime.now().time()
-      if (18,0)< current_time <(21,0) :
+      if dt_time(18, 0) <= current_time < dt_time(21, 0):
        raise PermissionDenied 
          
 #class to limit users to send only 5 messages per 60 seconds
@@ -58,5 +59,18 @@ class OffensiveLanguageMiddleware:
 
      return self.get_response(request)
 
+
+class RolepermissionMiddleware:
+   def __init__(self, get_response):
+      self.get_response = get_response
+
+   def __call__(self, request):
+      if request.user.role != 'Admin':
+         return JsonResponse({"Error": "Denied Access"},status=429)
+      
+      response = self.get_response(request)
+
+      return response     
+    
      
      
