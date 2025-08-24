@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Message
+from django.views.decorators.cache import cache_page
 from django.contrib.auth import get_user_model
 from .managers import unread_for_user
 # Create your views here.
+@cache_page(60 * 5)
 def message_history_view(request, message_id):
   message = get_object_or_404(Message, id = message_id)
   #gets the specific message by its id, if it doesn't exist it returns 404 page
