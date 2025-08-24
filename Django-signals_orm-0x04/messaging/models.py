@@ -23,6 +23,9 @@ class timestamp(models.Model):
   created_at = models.DateTimeField(auto_now_add = True)
   updated_at = models.DateTimeField(auto_now = True)
 
+class Message(models.Model):
+ message_id = models.PositiveIntegerField(primary_key = True)
+ message_body = models.CharField(max_length = 250, null = False)
 
 class Notification(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
