@@ -1,6 +1,6 @@
-from django.shortcuts import render,  get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Message
-
+from django.contrib.auth import get_user_model
 # Create your views here.
 def message_history_view(request, message_id):
   message = get_object_or_404(Message, id = message_id)
@@ -14,3 +14,10 @@ def message_history_view(request, message_id):
   #the specific message and its history are passed to this list context
   return render(request, context)
   #renders the template with context
+
+def delete_user(request, User, action):
+  if action == 'delete':
+   user = get_object_or_404(User, id= user)
+   user.delete()
+
+  return redirect('home')  

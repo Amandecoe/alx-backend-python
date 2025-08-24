@@ -1,6 +1,7 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.utils import timezone
+from django.contrib.auth.models import User
 from .models import sender, Notification, MessageHistory, Message
 
 @receiver(post_save, sender = sender, dispatch_uid = 'Send a Notification when User sends a Message')
@@ -25,3 +26,17 @@ def save_old_content(sender, instance, **kwargs):
      content = old_message.content,
      edited_At = timezone.now()
     )
+
+@receiver(post_delete, sender = User, dispatch_uid = 'delete user')
+def delete_user_data(sender, instance, **kwargs):
+      messages = Message.objects.filter(sender = instance)
+      #fetches all the messages of that sender
+      for msg in messages:
+         msg.delete()
+         #deletes all the messages of the user
+      received_messages = Message.objects.filter(receiver = instance)
+      #fetches all the messages received by that user
+      for msg in received_messages:
+         msg.delete()
+         #deletes all the received messages   
+      
