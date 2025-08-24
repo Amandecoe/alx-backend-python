@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Message
 from django.contrib.auth import get_user_model
+from .managers import unread_for_user
 # Create your views here.
 def message_history_view(request, message_id):
   message = get_object_or_404(Message, id = message_id)
@@ -35,4 +36,13 @@ def replies_optimized(request):
   return render(request,receiver)
 
 def users_inbox(request):
-   
+     sender = request.user
+     unread_messages = Message.unread.unread_for_user(sender).only('content','created_at')
+     context = {
+       'unread messages'  : unread_messages
+     }
+
+     return render (request, context) 
+
+
+     
