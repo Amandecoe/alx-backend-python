@@ -23,7 +23,7 @@ def delete_user(request, User, action):
   return redirect('home')  
 
 def replies_optimized(request):
-  sender = request.user
+  sender=request.user
   #fetches the requests of the user
   replies = Message.objects.filter(sender)
   #fetches all replies
