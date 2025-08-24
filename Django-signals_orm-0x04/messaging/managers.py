@@ -1,13 +1,14 @@
 from .models import Message
 from django.shortcuts import render
 
-def UnreadMessagesManager(request):
-  sender=request.user
-  unread_messages=Message.objects.filter.only(unread = False)
+class UnreadMessagesManager:
+  def unread_for_user(request):
+   sender=request.user
+   unread_messages=Message.objects.filter.only(unread = False)
   
-  if sender == unread_messages:
+   if sender == unread_messages:
     reply = {
       'unread_messages' : unread_messages
     }
 
-  return render (reply) 
+   return render (reply) 
