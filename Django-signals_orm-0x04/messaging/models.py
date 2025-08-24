@@ -29,6 +29,7 @@ class Message(models.Model):
  edited = models.TextField(max_length = 100, blank = True, null = True)
  is_edited = models.BooleanField(default = False)
  parent_message = models.CharField('self', on_delete = models.CASCADE, null = True, blank = True, related_name = 'Replies')
+ read = models.BooleanField() 
 
 class Notification(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
