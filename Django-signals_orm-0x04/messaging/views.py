@@ -21,3 +21,15 @@ def delete_user(request, User, action):
    user.delete()
 
   return redirect('home')  
+
+def replies_optimized(request):
+  sender = request.user
+  #fetches the requests of the user
+  replies = Message.objects.filter(sender)
+  #fetches all replies
+  replies = Message.objects.select_related('sender').prefetch_related('history').all()
+  #filters related ones with the request 
+  receiver = {
+    'messages': replies,
+  }
+  return render(request,receiver)
