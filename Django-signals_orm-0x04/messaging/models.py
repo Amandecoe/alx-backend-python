@@ -1,5 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
+User = get_user_model
 # Create your models here.
 class sender(models.Model):
   sender_id = models.PositiveIntegerField(primary_key=True)
@@ -21,4 +23,11 @@ class timestamp(models.Model):
   created_at = models.DateTimeField(auto_now_add = True)
   updated_at = models.DateTimeField(auto_now = True)
 
-  
+
+class Notification(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
+  Sender = models.ForeignKey(sender, on_delete=models.CASCADE)
+  message = models.CharField(max_length=255)
+  is_read = models.BooleanField(default=False)
+  created_at = models.DateTimeField(auto_now_add=True)
+ 
