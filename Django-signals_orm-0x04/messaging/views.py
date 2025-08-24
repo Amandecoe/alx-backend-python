@@ -34,14 +34,5 @@ def replies_optimized(request):
   }
   return render(request,receiver)
 
-def UnreadMessagesManager(request):
-  sender=request.user
-  messages=Message.objects.all()
-  unread_messages=Message.objects.filter(read = False)
-  
-  if sender == unread_messages:
-    reply = {
-      'unread_messages' : unread_messages
-    }
-
-  return render (reply)  
+def users_inbox(request):
+   
