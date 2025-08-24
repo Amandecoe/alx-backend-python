@@ -1,5 +1,5 @@
 from django.dispatch import receiver
-from django.db.models import post_save
+from django.db.models.signals import post_save
 from .models import sender
 
 @receiver(post_save, sender = sender, dispatch_uid = 'Send a Notification when User sends a Message')
