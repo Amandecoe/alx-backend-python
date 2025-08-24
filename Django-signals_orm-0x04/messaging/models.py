@@ -26,6 +26,8 @@ class timestamp(models.Model):
 class Message(models.Model):
  message_id = models.PositiveIntegerField(primary_key = True)
  message_body = models.CharField(max_length = 250, null = False)
+ edited = models.TextField(max_length = 100, blank = True, null = True)
+ is_edited = models.BooleanField(default = False)
 
 class Notification(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notifications")
