@@ -2,6 +2,7 @@
 # serializers.py
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from.models import Message
 
 # Get User model safely
 User = get_user_model()
@@ -26,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         # Import Message inside the class to avoid circular import
-        model = None
+        model = Message 
     
     def __init__(self, *args, **kwargs):
         from .models import Message  # Import here
