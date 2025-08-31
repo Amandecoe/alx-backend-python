@@ -22,7 +22,6 @@ def delete_user(request, User, action):
   if action == 'delete':
    user = get_object_or_404(User, id= user)
    user.delete()
-
   return redirect('home')  
 
 def replies_optimized(request):
