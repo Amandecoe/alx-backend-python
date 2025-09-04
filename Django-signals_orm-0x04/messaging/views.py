@@ -3,7 +3,7 @@ from .models import Message
 from django.views.decorators.cache import cache_page
 from django.contrib.auth import get_user_model
 from .managers import unread_for_user
-#create your views here 
+
 User = get_user_model()
 # Create your views here. 
 @cache_page(60 * 5)
