@@ -1,0 +1,26 @@
+
+services:
+  web:
+    build: .               # builds the Dockerfile in the current folder (your Django app)
+    container_name: messaging_app
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"        # maps host port 8000 to container port 8000
+    volumes:
+      - .:/app             # mounts your project folder for live code changes
+    depends_on:
+      - db                 # ensures the database starts before the web
+
+  db:
+    image: mysql:8
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: Amanuel
+      MYSQL_PASSWORD: messagingapp123
+      MYSQL_DATABASE: alx_prodev
+    volumes:
+      - mysqldata:/var/lib/mysql   # persists MySQL data
+
+volumes:
+  mysqldata:              # named volume to persist MySQL data across container restarts
