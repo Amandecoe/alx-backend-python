@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"        # maps host port 8000 to container port 8000
     volumes:
-      - .:/app             # mounts your project folder for live code changes
+      - ./messaging_app:/app            # mounts your project folder for live code changes
     depends_on:
       - db                 # ensures the database starts before the web
 
