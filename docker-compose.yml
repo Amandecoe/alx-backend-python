@@ -1,15 +1,17 @@
 
+version: "3.9"
+
 services:
   web:
-    build: .               # builds the Dockerfile in the current folder (your Django app)
+    build: .
     container_name: messaging_app
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python messaging_app/manage.py runserver 0.0.0.0:8000
     ports:
-      - "8000:8000"        # maps host port 8000 to container port 8000
+      - "8000:8000"             # maps host port to container
     volumes:
-      - ./messaging_app:/app            # mounts your project folder for live code changes
+      - .:/app                  # mounts host project for live code changes
     depends_on:
-      - db                 # ensures the database starts before the web
+      - db
 
   db:
     image: mysql:8
@@ -19,8 +21,10 @@ services:
       MYSQL_USER: Amanuel
       MYSQL_PASSWORD: messagingapp123
       MYSQL_DATABASE: alx_prodev
+    ports:
+      - "3306:3306"
     volumes:
-      - mysqldata:/var/lib/mysql   # persists MySQL data
+      - mysqldata:/var/lib/mysql  # persist MySQL data
 
 volumes:
-  mysqldata:              # named volume to persist MySQL data across container restarts
+  mysqldata:
