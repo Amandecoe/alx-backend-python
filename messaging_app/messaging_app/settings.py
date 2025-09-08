@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-okaw#2e&dp0_er(=do21b(2@b&e_w4rtdo&aqt$1ha8&b--x)y
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['yourdomain.com', '127.0.0.1']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
