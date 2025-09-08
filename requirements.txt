@@ -6,3 +6,4 @@ tzdata==2025.2
 django-mysql
 djangorestframework-simplejwt
 drf-nested-routers
+Pillow
