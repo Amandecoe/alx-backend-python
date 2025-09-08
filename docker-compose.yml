@@ -9,7 +9,7 @@ services:
     ports:
       - "8000:8000"             # maps host port to container
     volumes:
-      - .:/app                  # mounts host project for live code changes
+      - ./alx-backend-python:/app                 # mounts host project for live code changes
     depends_on:
       - db
 
