@@ -1,19 +1,19 @@
 apiversion: apps/v1 #kubernetes API version we are using
 kind: Deployment #tells kubernete we are defining a deployment
 metadata: 
-    name: messaging-app-Deployment 
-    labels:
+    name: messaging-app-Deployment #name of this deployment object
+    labels:  #Extra tags used for grouping/filtering objects we tag it with app:messaging_app
       app: messaging_app
-spec:
+spec: #defines the desired state of this deployment
     replicas: 3 #runs pods 3 times
     selector:
-      matchLabels:
+      matchLabels: #Tells the deployment which pods it manages
         app: messaging_app
-    template:
-      metadata:
+    template: #the blueprint for pods created by this depolyment
+      metadata: 
         labels:
-          app: messaging_app
-      spec:
+          app: messaging_app #this is how the deployment finds its pods
+      spec: #defines what is inside 
         containers:
         - name: messaging_app
           image: alx-backend-python-messaging_app      

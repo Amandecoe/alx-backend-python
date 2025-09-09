@@ -1,0 +1,12 @@
+apiversion v1
+kind: Service
+metadata:
+   name: messaging-app-Service
+spec:
+   selector:
+     app: messaging_app #must match the label in the deployment 
+   ports:
+    - protocol: TCP
+      port: 8000  #service port inside cluster
+      targetport: 8000  #container port in the pod    
+  type: clusterIP    
