@@ -5,12 +5,12 @@ kubectl apply -f blue_deployment.yaml
 
 # Monitor rolling update progress
 echo "Monitoring rollout..."
-kubectl rollout status deployment/messaging-app-blue
+kubectl rollout status deployment/messaging-app-deployment
 
 # Test for downtime using curl
 echo "Testing app availability on localhost:8000..."
 while true; do
-  response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/)
+  response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/api/)
   echo "HTTP Status: $response"
   sleep 2
 done
