@@ -16,7 +16,7 @@ spec:                            # Desired state of this deployment
     spec:                        # What is inside the pod
       containers:
       - name: messaging-app
-        image: alx-backend-python-messaging_app
+        image: alx-backend-python-messaging_app:2.0
         ports:
         - containerPort: 8000
         env:
