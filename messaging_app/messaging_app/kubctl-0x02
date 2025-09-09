@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Apply blue deployment
+kubectl apply -f blue_deployment.yaml
+
+# Apply green deployment
+kubectl apply -f green_deployment.yaml
+
+# Apply Service
+kubectl apply -f kubeservice.yaml
+
+# Check status of all pods
+kubectl get pods
+
+# Check logs for green deployment to see if it started correctly
+kubectl logs -l version=green
