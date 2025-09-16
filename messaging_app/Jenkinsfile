@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        // Use your Jenkins credential ID for GitHub
+        GIT_CREDENTIALS_ID = 1234
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    credentialsId: "${env.GIT_CREDENTIALS_ID}",
+                    url: 'https://github.com/Amandecoe/alx-backend-python/messaging_app.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                python -m venv venv
+                . venv/bin/activate
+                pip install --upgrade pip
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                . venv/bin/activate
+                pytest --junitxml=reports/test-results.xml
+                '''
+            }
+            post {
+                always {
+                    junit 'reports/test-results.xml'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished!'
+        }
+    }
+}
