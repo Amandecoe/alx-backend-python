@@ -4,7 +4,7 @@ pipeline {
     environment {
         GIT_CREDENTIALS_ID = '1234'
         DOCKER_CREDENTIALS_ID = 'dockerhub-1234'
-        DOCKER_IMAGE = 'your-dockerhub-username/messaging_app'
+        DOCKER_IMAGE = 'amanueldocker/messaging_app'
     }
 
     stages {
@@ -12,7 +12,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     credentialsId: "${env.GIT_CREDENTIALS_ID}",
-                    url: 'https://github.com/your-username/alx-backend-python.git'
+                    url: 'https://github.com/Amandecoe/alx-backend-python.git'
             }
         }
 
