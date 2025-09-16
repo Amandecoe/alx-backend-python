@@ -17,6 +17,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                dir('messaging_app') 
                 sh '''
                 python -m venv venv
                 . venv/bin/activate
