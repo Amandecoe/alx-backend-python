@@ -2,12 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // GitHub credentials stored in Jenkins
         GIT_CREDENTIALS_ID = '1234'
-        // Docker Hub credentials stored in Jenkins
-        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
-        // Docker Hub repo (change to your DockerHub username/repo)
-        DOCKER_IMAGE = 'amanuelpk/messaging_app'
+        DOCKER_CREDENTIALS_ID = 'dockerhub-1234'
+        DOCKER_IMAGE = 'your-dockerhub-username/messaging_app'
     }
 
     stages {
@@ -15,7 +12,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     credentialsId: "${env.GIT_CREDENTIALS_ID}",
-                    url: 'https://github.com/Amandecoe/alx-backend-python.git'
+                    url: 'https://github.com/your-username/alx-backend-python.git'
             }
         }
 
@@ -24,8 +21,8 @@ pipeline {
                 sh '''
                 python3 -m venv venv
                 . venv/bin/activate
-                pip3 install --upgrade pip
-                pip3 install -r messaging_app/requirements.txt
+                pip install --upgrade pip
+                pip install django mysqlclient
                 '''
             }
         }
@@ -34,21 +31,15 @@ pipeline {
             steps {
                 sh '''
                 . venv/bin/activate
-                pytest --junitxml=messaging_app/reports/test-results.xml
+                python manage.py test chats
                 '''
-            }
-            post {
-                always {
-                    junit 'messaging_app/reports/test-results.xml'
-                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                     // Build Docker image using messaging_app folder as context
-                     dockerImage = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}", "messaging_app")
+                    dockerImage = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}", ".")
                 }
             }
         }
@@ -58,7 +49,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
                         dockerImage.push()
-                        dockerImage.push('latest')  // also tag as latest
+                        dockerImage.push('latest')
                     }
                 }
             }
