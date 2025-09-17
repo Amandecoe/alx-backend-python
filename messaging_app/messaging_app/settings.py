@@ -92,9 +92,13 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'alx_prodev',   # your database name
+        'USER': 'root',         # your MySQL username
+        'PASSWORD': '',         # your MySQL password (leave empty if none)
+        'HOST': '127.0.0.1',    # database host
+        'PORT': '3306',         # default MySQL port
     }
 }
 
