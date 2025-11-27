@@ -1,21 +1,39 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
 import requests
 import datetime
-# Create your views here.
+
 def home(request):
-    if 'city' in request.POST:
-        city = request.POST['city']
-    else:
-        city = 'indoor'
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=dd2f8a056a0e3b707b8b7838153aba19'
+    # city from form
+    city = request.POST.get('city', 'Addis Ababa')
 
-    PARAMS = {'units':'metric'}
-    data = request.get(url, PARAMS).json()
+    url = 'https://api.openweathermap.org/data/2.5/weather'
+    params = {
+        'q': city,
+        'appid': 'dd2f8a056a0e3b707b8b7838153aba19',
+        'units': 'metric'
+    }
 
-    description = data ['weather'][0]['description'] #description of the weather
-    icon = data ['weather'][0]['icon'] #description of the weather icon
-    temp = data['main']['temp'] #temperature of our city
+    data = requests.get(url, params=params).json()
+    print(data)   # ← for debugging
+
+    # ❗ If city not found or API error, avoid KeyError
+    if data.get("cod") != 200:
+        return render(request, 'Weatherapp/index.html', {
+            'error': data.get('message', 'Unknown error'),
+            'day': datetime.date.today()
+        })
+
+    # Extract safely
+    description = data['weather'][0]['description']
+    icon = data['weather'][0]['icon']
+    temp = data['main']['temp']
 
     day = datetime.date.today()
 
-    return render(request, 'Weatherapp/index.html',{'descritption':description, 'icon':icon, 'temp':temp, 'day':day})
+    return render(request, 'Weatherapp/index.html', {
+        'description': description,
+        'icon': icon,
+        'temp': temp,
+        'city': city,
+        'day': day
+    })
